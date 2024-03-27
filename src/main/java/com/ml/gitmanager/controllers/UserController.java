@@ -8,38 +8,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ml.gitmanager.entities.User;
 import com.ml.gitmanager.exceptions.GitManagerException;
 import com.ml.gitmanager.exceptions.UserNotFoundException;
-import com.ml.gitmanager.repositories.GitManagerRepository;
+import com.ml.gitmanager.repositories.UserRepository;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
 @RequestMapping("/api/v1/")
-@CrossOrigin(origins = {"localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class UserController {
 
 	@Autowired
-	private GitManagerRepository gitManagerRepository;
+	private UserRepository userRepository;
 	
-	@GetMapping("/register")
+	@PostMapping("/users")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 		
-		return ResponseEntity.ok(gitManagerRepository.save(user));
+		return ResponseEntity.ok(userRepository.save(user));
 	}
 	
-	@GetMapping("/login/{id}")
+	@GetMapping("/users/{id}")
 	public ResponseEntity<User> getUser(@PathVariable Long id) throws GitManagerException {
 		
-		return ResponseEntity.ok(gitManagerRepository.findById(id).orElseThrow(()->new UserNotFoundException("User can not be found with id as : "+id)));
+		return ResponseEntity.ok(userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User can not be found with id as : "+id)));
 	}
 	
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUsers() {
 		
-		return ResponseEntity.ok(gitManagerRepository.findAll());
+		return ResponseEntity.ok(userRepository.findAll());
 	}
 }
