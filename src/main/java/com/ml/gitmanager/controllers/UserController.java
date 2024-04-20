@@ -9,6 +9,11 @@ import com.ml.gitmanager.entities.User;
 import com.ml.gitmanager.exceptions.GitManagerException;
 import com.ml.gitmanager.exceptions.UserNotFoundException;
 import com.ml.gitmanager.repositories.UserRepository;
+import com.ml.gitmanager.utilities.GitManagerUtilities;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +31,23 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	@Transactional
 	@PostMapping("/users")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
+		entityManager.createNativeQuery("CALL create_user_table_if_not_exists();").executeUpdate();
 		
-		return ResponseEntity.ok(userRepository.save(user));
+		User u = new User();
+		u.setFname(user.getFname());
+		u.setLname(user.getLname());
+		u.setEmail(user.getEmail());
+		u.setUsername(GitManagerUtilities.hashGenerator(user.getUsername()));
+		u.setPassword(GitManagerUtilities.hashGenerator(user.getPassword()));
+		u.setAccesstoken(GitManagerUtilities.hashGenerator(user.getAccesstoken()));
+		
+		return ResponseEntity.ok(userRepository.save(u));
 	}
 	
 	@GetMapping("/users/{id}")

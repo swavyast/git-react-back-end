@@ -5,52 +5,62 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "user")
+
 public class User {
 
-	@Setter(value = AccessLevel.NONE)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+	private String fname;
+	private String lname;
 	private String username;
 	private String email;
 	private String password;
-	
-	public User() {}
+	private String accesstoken;
 
-	public User(String name, String username, String email, String password) {
-		super();
-		this.name = name;
+	public User() {
+		// Default Constructor
+	}
+
+	public User(String fname, String lname, String username, String email, String password, String accesstoken) {
+		this.fname = fname;
+		this.lname = lname;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.accesstoken = accesstoken;
+	}
+	public User(Long id, String fname, String lname, String username, String email, String password, String accesstoken) {
+		this.id = id;
+		this.fname = fname;
+		this.lname = lname;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.accesstoken = accesstoken;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getFname() {
+		return fname;
 	}
 
-	public String getName() {
-		return name;
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getLname() {
+		return lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
 	}
 
 	public String getUsername() {
@@ -76,6 +86,19 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public String getAccesstoken() {
+		return accesstoken;
+	}
+
+	public void setAccesstoken(String accesstoken) {
+		this.accesstoken = accesstoken;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", fname=" + fname + ", lname=" + lname + ", username=" + username + ", email="
+				+ email + ", password=" + password + ", accesstoken=" + accesstoken + "]";
+	}
+
 }
