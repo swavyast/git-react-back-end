@@ -1,5 +1,7 @@
 package com.ml.gitmanager.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.ml.gitmanager.entities.User;
@@ -14,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * 
 	 * public User getUserByName(String name);
 	 * 
-	 * public User getUserByUsername(String username);
-	 * 
 	 * public User getUserByEmail(String email);
 	 * 
 	 * public List<User> getAllUsers();
@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * 
 	 * public void deleteUser(Long id);
 	 */
+
+	 public Optional<User> findByUsername(String username);
 }

@@ -1,5 +1,7 @@
 package com.ml.gitmanager.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,10 @@ public class User {
 	private String email;
 	private String password;
 	private String accesstoken;
+	private LocalDate dob;
+	private Byte age;
+	private Gender gender;
+	private Long phone;
 
 	public User() {
 		// Default Constructor
@@ -41,6 +47,13 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.accesstoken = accesstoken;
+	}
+
+	public User(LocalDate dob, Byte age, Gender gender, Long phone) {
+		this.dob = dob;
+		this.age = age;
+		this.gender = gender;
+		this.phone = phone;
 	}
 
 	public Long getId() {
@@ -95,10 +108,43 @@ public class User {
 		this.accesstoken = accesstoken;
 	}
 
+	public LocalDate getDob() {
+		return dob;
+	}
+
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
+	}
+
+	public Byte getAge() {
+		return age;
+	}
+
+	public void setAge(Byte age) {
+		this.age = age;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Long getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", fname=" + fname + ", lname=" + lname + ", username=" + username + ", email="
-				+ email + ", password=" + password + ", accesstoken=" + accesstoken + "]";
+				+ email + ", password=" + password + ", accesstoken=" + accesstoken + ", dob=" + dob + ", age=" + age
+				+ ", gender=" + gender + ", phone=" + phone + "]";
 	}
 
 }
